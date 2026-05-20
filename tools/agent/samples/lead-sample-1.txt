@@ -1,0 +1,20 @@
+Asunto: Necesitamos sistema CRM urgente
+
+Hola,
+
+Soy Carlos Méndez, director de operaciones en TechSolutions MX (techsolutions.com.mx).
+
+Tenemos un problema serio: manejamos clientes con Excel y se nos están perdiendo seguimientos. Necesitamos un CRM personalizado que:
+
+- Integre con nuestro correo (Outlook 365)
+- Tenga pipeline visual estilo kanban
+- Reportes automáticos por vendedor (8 personas)
+- Idealmente con módulo de cotizaciones también
+
+Presupuesto inicial 120k MXN. Queremos arrancar en 3 semanas si es posible.
+
+Pueden contactarme en carlos.mendez@techsolutions.com.mx o al +52 55 1234 5678.
+
+Saludos,
+Carlos Méndez
+Director de Operaciones | TechSolutions MX

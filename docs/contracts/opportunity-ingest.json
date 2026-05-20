@@ -1,0 +1,58 @@
+{
+  "_comment": "Contract: AI Orchestrator → POST /api/opportunities. All fields UTF-8.",
+
+  "validExample": {
+    "companyName": "Acme Corp",
+    "contactName": "Jane Doe",
+    "contactEmail": "jane@acme.com",
+    "developmentPossibility": "## Summary\nClient needs ERP integration with existing POS system.\n\n## Details\n- Stack: .NET + SQL Server\n- Timeline: 3 months\n- Budget: $80,000 MXN",
+    "externalLeadId": "agent-lead-sha256-abc123"
+  },
+
+  "invalidExample": {
+    "companyName": "",
+    "contactName": "Jane",
+    "contactEmail": "not-an-email",
+    "developmentPossibility": "",
+    "externalLeadId": null
+  },
+
+  "fieldSpec": {
+    "companyName":            { "type": "string", "required": true,  "maxLength": 200 },
+    "contactName":            { "type": "string", "required": true,  "maxLength": 150 },
+    "contactEmail":           { "type": "string", "required": true,  "maxLength": 150, "format": "email" },
+    "developmentPossibility": { "type": "string", "required": true,  "maxLength": 4000, "format": "markdown" },
+    "externalLeadId":         { "type": "string", "required": false, "maxLength": 100, "note": "deterministic hash from agent; enables idempotency on retry" }
+  },
+
+  "decisions": {
+    "statusModel": {
+      "states": ["AiGenerated", "Evaluating", "Contacted", "Discarded"],
+      "allowedTransitions": [
+        ["AiGenerated", "Evaluating"],
+        ["AiGenerated", "Discarded"],
+        ["Evaluating",  "Contacted"],
+        ["Evaluating",  "Discarded"]
+      ],
+      "terminalStates": ["Contacted", "Discarded"],
+      "reopenable": false
+    },
+    "authentication": {
+      "scheme": "ApiKey",
+      "header": "X-Api-Key",
+      "configPath": "Ingestion:ApiKeys",
+      "comparison": "CryptographicOperations.FixedTimeEquals",
+      "notes": "Single key for MVP. Add rotation runbook before prod."
+    },
+    "idempotency": {
+      "key": "externalLeadId",
+      "behavior": "If ExternalLeadId already exists in DB, return existing record (same Id). No duplicate created."
+    },
+    "pii": {
+      "fields": ["contactEmail", "contactName"],
+      "atRest": "plaintext columns, no encryption (MVP)",
+      "inTransit": "TLS required",
+      "logging": "Never log contactEmail, contactName, or developmentPossibility at Information level"
+    }
+  }
+}
