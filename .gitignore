@@ -1,0 +1,33 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.DotSettings.user
+
+# EF Migrations auto-snapshot (keep migration files, ignore snapshot only if desired)
+# Uncomment to ignore: **/Migrations/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / local overrides
+appsettings.*.local.json
+secrets.json
+.env
+.env.local
